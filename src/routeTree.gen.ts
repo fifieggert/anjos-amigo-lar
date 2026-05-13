@@ -9,38 +9,157 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PublicoRouteImport } from './routes/publico'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRelatoriosRouteImport } from './routes/_app.relatorios'
+import { Route as AppDoacoesRouteImport } from './routes/_app.doacoes'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppAnimaisRouteImport } from './routes/_app.animais'
+import { Route as AppAdocoesRouteImport } from './routes/_app.adocoes'
 
+const PublicoRoute = PublicoRouteImport.update({
+  id: '/publico',
+  path: '/publico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRelatoriosRoute = AppRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDoacoesRoute = AppDoacoesRouteImport.update({
+  id: '/doacoes',
+  path: '/doacoes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAnimaisRoute = AppAnimaisRouteImport.update({
+  id: '/animais',
+  path: '/animais',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdocoesRoute = AppAdocoesRouteImport.update({
+  id: '/adocoes',
+  path: '/adocoes',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/publico': typeof PublicoRoute
+  '/adocoes': typeof AppAdocoesRoute
+  '/animais': typeof AppAnimaisRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/doacoes': typeof AppDoacoesRoute
+  '/relatorios': typeof AppRelatoriosRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/publico': typeof PublicoRoute
+  '/adocoes': typeof AppAdocoesRoute
+  '/animais': typeof AppAnimaisRoute
+  '/dashboard': typeof AppDashboardRoute
+  '/doacoes': typeof AppDoacoesRoute
+  '/relatorios': typeof AppRelatoriosRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_app': typeof AppRouteWithChildren
+  '/login': typeof LoginRoute
+  '/publico': typeof PublicoRoute
+  '/_app/adocoes': typeof AppAdocoesRoute
+  '/_app/animais': typeof AppAnimaisRoute
+  '/_app/dashboard': typeof AppDashboardRoute
+  '/_app/doacoes': typeof AppDoacoesRoute
+  '/_app/relatorios': typeof AppRelatoriosRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/publico'
+    | '/adocoes'
+    | '/animais'
+    | '/dashboard'
+    | '/doacoes'
+    | '/relatorios'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/publico'
+    | '/adocoes'
+    | '/animais'
+    | '/dashboard'
+    | '/doacoes'
+    | '/relatorios'
+  id:
+    | '__root__'
+    | '/'
+    | '/_app'
+    | '/login'
+    | '/publico'
+    | '/_app/adocoes'
+    | '/_app/animais'
+    | '/_app/dashboard'
+    | '/_app/doacoes'
+    | '/_app/relatorios'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  PublicoRoute: typeof PublicoRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/publico': {
+      id: '/publico'
+      path: '/publico'
+      fullPath: '/publico'
+      preLoaderRoute: typeof PublicoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +167,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_app/relatorios': {
+      id: '/_app/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AppRelatoriosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/doacoes': {
+      id: '/_app/doacoes'
+      path: '/doacoes'
+      fullPath: '/doacoes'
+      preLoaderRoute: typeof AppDoacoesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/animais': {
+      id: '/_app/animais'
+      path: '/animais'
+      fullPath: '/animais'
+      preLoaderRoute: typeof AppAnimaisRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/adocoes': {
+      id: '/_app/adocoes'
+      path: '/adocoes'
+      fullPath: '/adocoes'
+      preLoaderRoute: typeof AppAdocoesRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAdocoesRoute: typeof AppAdocoesRoute
+  AppAnimaisRoute: typeof AppAnimaisRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDoacoesRoute: typeof AppDoacoesRoute
+  AppRelatoriosRoute: typeof AppRelatoriosRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAdocoesRoute: AppAdocoesRoute,
+  AppAnimaisRoute: AppAnimaisRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppDoacoesRoute: AppDoacoesRoute,
+  AppRelatoriosRoute: AppRelatoriosRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  LoginRoute: LoginRoute,
+  PublicoRoute: PublicoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
