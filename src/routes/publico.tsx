@@ -247,6 +247,135 @@ function ImpactStrip() {
   );
 }
 
+/* ---------- Eventos ---------- */
+const eventos = [
+  {
+    id: 1,
+    titulo: "Feira de Adoção de Sábado",
+    data: "14 de Junho, 2026",
+    horario: "09:00 – 16:00",
+    local: "Parque do Ibirapuera, São Paulo",
+    descricao: "Venha conhecer nossos peludos resgatados! Teremos cães e gatos prontos para adoção responsável."
+  },
+  {
+    id: 2,
+    titulo: "Dia da Vacinação Gratuita",
+    data: "22 de Junho, 2026",
+    horario: "08:00 – 12:00",
+    local: "Unidade Anjos Protetores, Zona Sul",
+    descricao: "Vacinação antirrábica e vermifugação gratuita para cães e gatos. Leve seu documento."
+  },
+  {
+    id: 3,
+    titulo: "Mutirão de Castração",
+    data: "05 de Julho, 2026",
+    horario: "07:00 – 17:00",
+    local: "Clínica Parceira VetCare",
+    descricao: "50 vagas para castração de baixa renda. Inscrições abertas pelo site até 01/07."
+  },
+  {
+    id: 4,
+    titulo: "Workshop: Cuidados com Filhotes",
+    data: "12 de Julho, 2026",
+    horario: "14:00 – 16:00",
+    local: "Online (YouTube Live)",
+    descricao: "Aprenda sobre alimentação, socialização e primeiros cuidados com veterinária especializada."
+  },
+  {
+    id: 5,
+    titulo: "Arraiá dos Peludos",
+    data: "26 de Julho, 2026",
+    horario: "10:00 – 18:00",
+    local: "Praça da Pampulha, Belo Horizonte",
+    descricao: "Festa junina temática com adoção, barracas de comida, brincadeiras e muito amor pet."
+  },
+];
+
+function EventosCarousel() {
+  const [idx, setIdx] = useState(0);
+  const visiveis = 3;
+  const maxIdx = Math.max(0, eventos.length - visiveis);
+
+  const next = useCallback(() => setIdx((i) => Math.min(i + 1, maxIdx)), [maxIdx]);
+  const prev = useCallback(() => setIdx((i) => Math.max(i - 1, 0)), []);
+
+  useEffect(() => {
+    const id = setInterval(next, 5000);
+    return () => clearInterval(id);
+  }, [next]);
+
+  return (
+    <section id="eventos" className="bg-gradient-to-b from-secondary/5 to-transparent py-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-10">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-accent mb-3">Fique por dentro</p>
+            <h2 className="font-display font-bold text-4xl sm:text-5xl tracking-tight">Próximos eventos</h2>
+            <p className="text-muted-foreground mt-3 max-w-xl">
+              Participe de feiras de adoção, vacinações gratuitas e muito mais.
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={prev}
+              disabled={idx === 0}
+              className="size-11 rounded-2xl bg-card border border-border grid place-items-center hover:bg-muted disabled:opacity-40 transition-colors"
+              aria-label="Anterior"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+            <button
+              onClick={next}
+              disabled={idx >= maxIdx}
+              className="size-11 rounded-2xl bg-card border border-border grid place-items-center hover:bg-muted disabled:opacity-40 transition-colors"
+              aria-label="Próximo"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+          </div>
+        </div>
+
+        <div className="overflow-hidden">
+          <div
+            className="flex gap-6 transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${idx * (100 / visiveis + 2)}%)` }}
+          >
+            {eventos.map((e) => (
+              <article
+                key={e.id}
+                className="min-w-[calc(33.333%-1rem)] flex-1 bg-card rounded-3xl border border-border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col"
+              >
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-bold uppercase tracking-wider w-fit">
+                  <Calendar className="size-3.5" />
+                  {e.data}
+                </div>
+                <h3 className="font-display font-bold text-xl mt-4">{e.titulo}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1">{e.descricao}</p>
+                <div className="mt-5 space-y-2 text-sm">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="size-4 text-secondary" />
+                    <span>{e.horario}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <MapPinIcon className="size-4 text-secondary" />
+                    <span>{e.local}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => toast.success(`Lembrete salvo para: ${e.titulo}`)}
+                  className="mt-5 w-full inline-flex items-center justify-center gap-2 py-3 rounded-2xl bg-accent text-accent-foreground font-bold hover:bg-accent/90 transition-all"
+                >
+                  Quero ir <ArrowRight className="size-4" />
+                </button>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Animais ---------- */
 const especies = ["Todos", "Cão", "Gato"] as const;
 
