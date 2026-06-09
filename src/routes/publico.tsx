@@ -17,7 +17,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { animais } from "@/lib/mock-data";
+import { animais, type Animal } from "@/lib/mock-data";
 import logo from "@/assets/logo-anjos.png";
 import hero from "@/assets/hero-adocao.jpg";
 import { toast } from "sonner";
@@ -245,6 +245,7 @@ const especies = ["Todos", "Cão", "Gato"] as const;
 
 function AnimaisSection() {
   const [especie, setEspecie] = useState<(typeof especies)[number]>("Todos");
+  const [selecionado, setSelecionado] = useState<Animal | null>(null);
   const lista = useMemo(
     () =>
       animais
@@ -285,7 +286,8 @@ function AnimaisSection() {
         {lista.map((a) => (
           <article
             key={a.id}
-            className="group bg-card rounded-3xl overflow-hidden border border-border shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+            onClick={() => setSelecionado(a)}
+            className="group cursor-pointer bg-card rounded-3xl overflow-hidden border border-border shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               <img
@@ -312,11 +314,11 @@ function AnimaisSection() {
                 {a.vacinado && <Tag tone="success">Vacinado</Tag>}
               </div>
               <button
-                onClick={() =>
-                  toast.success(`Solicitação enviada para ${a.nome}!`, {
-                    description: "Nossa equipe entrará em contato em até 48h.",
-                  })
-                }
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelecionado(a);
+                }}
                 className="mt-5 w-full inline-flex items-center justify-center gap-2 py-3 rounded-2xl bg-foreground text-background font-bold hover:bg-foreground/90 transition-all"
               >
                 Ver mais <ArrowRight className="size-4" />
@@ -331,7 +333,219 @@ function AnimaisSection() {
           Nenhum animal corresponde a este filtro.
         </p>
       )}
+
+      {selecionado && (
+        <AnimalDetalheModal animal={selecionado} onClose={() => setSelecionado(null)} />
+      )}
     </section>
+  );
+}
+
+/* ---------- Modal de detalhes + formulário ---------- */
+function AnimalDetalheModal({ animal, onClose }: { animal: Animal; onClose: () => void }) {
+  const [enviando, setEnviando] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [onClose]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const nome = (data.get("nome") as string)?.trim();
+    const cpf = (data.get("cpf") as string)?.trim();
+    const email = (data.get("email") as string)?.trim();
+    if (!nome || !cpf || !email) {
+      toast.error("Preencha os campos obrigatórios.");
+      return;
+    }
+    setEnviando(true);
+    setTimeout(() => {
+      setEnviando(false);
+      toast.success(`Solicitação enviada para adotar ${animal.nome}!`, {
+        description: "Nossa equipe entrará em contato em até 48h.",
+      });
+      onClose();
+    }, 600);
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-foreground/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-card rounded-3xl shadow-2xl w-full max-w-4xl max-h-[92vh] overflow-y-auto"
+      >
+        <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b border-border bg-card/95 backdrop-blur">
+          <h2 className="font-display font-bold text-xl">Quero adotar {animal.nome}</h2>
+          <button
+            type="button"
+            onClick={onClose}
+            className="p-2 rounded-lg hover:bg-muted"
+            aria-label="Fechar"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-0">
+          {/* Detalhes do animal */}
+          <div className="p-6 lg:border-r border-border">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-muted">
+              <img src={animal.foto} alt={animal.nome} className="w-full h-full object-cover" />
+            </div>
+            <div className="mt-5">
+              <div className="flex items-baseline justify-between">
+                <h3 className="font-display font-bold text-3xl">{animal.nome}</h3>
+                <span className="text-xs font-bold text-secondary uppercase">{animal.especie}</span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{animal.raca} • {animal.id}</p>
+              <p className="mt-4 text-sm leading-relaxed">{animal.descricao}</p>
+              <dl className="mt-5 grid grid-cols-2 gap-3 text-sm">
+                <InfoItem label="Idade" value={animal.idade} />
+                <InfoItem label="Porte" value={animal.porte} />
+                <InfoItem label="Vacinado" value={animal.vacinado ? "Sim" : "Não"} />
+                <InfoItem label="Castrado" value={animal.castrado ? "Sim" : "Não"} />
+              </dl>
+            </div>
+          </div>
+
+          {/* Formulário */}
+          <form onSubmit={handleSubmit} className="p-6 space-y-4">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-accent">Formulário de adoção</p>
+              <h4 className="font-display font-bold text-xl mt-1">Conte um pouco sobre você</h4>
+              <p className="text-sm text-muted-foreground mt-1">
+                Seus dados são confidenciais e usados apenas no processo de adoção.
+              </p>
+            </div>
+
+            <FormInput name="nome" label="Nome completo" placeholder="Maria da Silva" required />
+            <div className="grid grid-cols-2 gap-3">
+              <FormInput name="cpf" label="CPF" placeholder="000.000.000-00" required />
+              <FormInput name="nascimento" label="Data de nascimento" type="date" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <FormInput name="email" label="E-mail" type="email" placeholder="voce@email.com" required />
+              <FormInput name="telefone" label="Telefone / WhatsApp" placeholder="(11) 99999-0000" required />
+            </div>
+            <FormInput name="endereco" label="Endereço completo" placeholder="Rua, número, bairro, cidade — UF" required />
+            <div className="grid grid-cols-2 gap-3">
+              <FormInput name="cep" label="CEP" placeholder="00000-000" />
+              <FormInput name="renda" label="Renda mensal (R$)" placeholder="3500" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <FormSelect name="moradia" label="Tipo de moradia" options={["Casa", "Apartamento", "Sítio/Chácara"]} />
+              <FormSelect name="outros" label="Tem outros animais?" options={["Não", "Sim, cães", "Sim, gatos", "Sim, ambos"]} />
+            </div>
+            <div>
+              <label className="text-sm font-semibold">Por que deseja adotar {animal.nome}?</label>
+              <textarea
+                name="motivo"
+                rows={3}
+                placeholder="Conte um pouco sobre sua rotina e o que te motiva a adotar..."
+                className="mt-1 w-full px-4 py-3 bg-muted rounded-2xl outline-none text-sm focus:ring-2 ring-primary"
+              />
+            </div>
+            <label className="flex items-start gap-2 text-xs text-muted-foreground">
+              <input type="checkbox" required className="mt-0.5" />
+              <span>
+                Concordo com os termos de adoção responsável e autorizo o contato da equipe do Anjos Protetores.
+              </span>
+            </label>
+
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 px-5 py-3 rounded-2xl border border-border font-semibold hover:bg-muted"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                disabled={enviando}
+                className="flex-1 px-5 py-3 rounded-2xl bg-accent text-accent-foreground font-bold hover:bg-accent/90 disabled:opacity-60"
+              >
+                {enviando ? "Enviando..." : "Enviar solicitação"}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InfoItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-muted/60 rounded-xl px-3 py-2">
+      <dt className="text-[10px] uppercase font-bold tracking-wider text-muted-foreground">{label}</dt>
+      <dd className="font-semibold mt-0.5">{value}</dd>
+    </div>
+  );
+}
+
+function FormInput({
+  name,
+  label,
+  type = "text",
+  placeholder,
+  required,
+}: {
+  name: string;
+  label: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+}) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold">
+        {label} {required && <span className="text-accent">*</span>}
+      </span>
+      <input
+        name={name}
+        type={type}
+        required={required}
+        placeholder={placeholder}
+        className="mt-1 w-full px-4 py-3 bg-muted rounded-2xl outline-none text-sm focus:ring-2 ring-primary"
+      />
+    </label>
+  );
+}
+
+function FormSelect({
+  name,
+  label,
+  options,
+}: {
+  name: string;
+  label: string;
+  options: string[];
+}) {
+  return (
+    <label className="block">
+      <span className="text-sm font-semibold">{label}</span>
+      <select
+        name={name}
+        className="mt-1 w-full px-4 py-3 bg-muted rounded-2xl outline-none text-sm focus:ring-2 ring-primary"
+      >
+        {options.map((o) => (
+          <option key={o}>{o}</option>
+        ))}
+      </select>
+    </label>
   );
 }
 
