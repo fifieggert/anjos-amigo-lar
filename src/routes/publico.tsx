@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import {
   Heart,
   ArrowRight,
@@ -16,6 +16,11 @@ import {
   Facebook,
   Menu,
   X,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  MapPin as MapPinIcon,
 } from "lucide-react";
 import { animais, type Animal } from "@/lib/mock-data";
 import logo from "@/assets/logo-anjos.png";
