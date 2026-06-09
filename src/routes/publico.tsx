@@ -17,7 +17,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { animais } from "@/lib/mock-data";
+import { animais, type Animal } from "@/lib/mock-data";
 import logo from "@/assets/logo-anjos.png";
 import hero from "@/assets/hero-adocao.jpg";
 import { toast } from "sonner";
