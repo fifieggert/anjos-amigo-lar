@@ -82,6 +82,7 @@ function Navbar({
   const links = [
     { label: "Início", href: "#inicio" },
     { label: "Animais", href: "#animais" },
+    { label: "Eventos", href: "#eventos" },
     { label: "Sobre", href: "#sobre" },
     { label: "Doações", href: "#doacoes" },
   ];
