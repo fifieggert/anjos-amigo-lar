@@ -59,6 +59,7 @@ function PublicoPage() {
       <Navbar scrolled={scrolled} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <Hero />
       <ImpactStrip />
+      <EventosCarousel />
       <AnimaisSection />
       <ComoFunciona />
       <SobreSection />
