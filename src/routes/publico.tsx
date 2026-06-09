@@ -875,6 +875,7 @@ function Footer() {
           <ul className="space-y-2 text-sm text-muted-foreground">
             <li><a href="#inicio" className="hover:text-foreground">Início</a></li>
             <li><a href="#animais" className="hover:text-foreground">Animais</a></li>
+            <li><a href="#eventos" className="hover:text-foreground">Eventos</a></li>
             <li><a href="#sobre" className="hover:text-foreground">Sobre</a></li>
             <li><a href="#doacoes" className="hover:text-foreground">Doações</a></li>
           </ul>
@@ -883,9 +884,9 @@ function Footer() {
         <div>
           <h4 className="font-display font-bold mb-4">Contato</h4>
           <ul className="space-y-3 text-sm text-muted-foreground">
-            <li className="flex items-center gap-2"><Mail className="size-4 text-primary" /> contato@anjosprotetores.org</li>
-            <li className="flex items-center gap-2"><Phone className="size-4 text-primary" /> (11) 4002-8922</li>
-            <li className="flex items-center gap-2"><MapPin className="size-4 text-primary" /> São Paulo, SP</li>
+            <li className="flex items-center gap-2"><Mail className="size-4 text-primary" /><span>contato@anjosprotetores.org</span></li>
+            <li className="flex items-center gap-2"><Phone className="size-4 text-primary" /><span>(11) 4002-8922</span></li>
+            <li className="flex items-center gap-2"><MapPin className="size-4 text-primary" /><span>São Paulo, SP</span></li>
           </ul>
         </div>
 
