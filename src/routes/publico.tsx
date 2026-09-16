@@ -23,7 +23,8 @@ import {
   MapPin as MapPinIcon,
 } from "lucide-react";
 import { animais, type Animal } from "@/lib/mock-data";
-import logo from "@/assets/logo-anjos.png";
+import logoAsset from "@/assets/logo-anjos.png.asset.json";
+const logo = logoAsset.url;
 import hero from "@/assets/hero-adocao.jpg";
 import { toast } from "sonner";
 

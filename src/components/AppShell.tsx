@@ -12,7 +12,8 @@ import {
   Bell,
 } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/logo-anjos.png";
+import logoAsset from "@/assets/logo-anjos.png.asset.json";
+const logo = logoAsset.url;
 
 const nav = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
