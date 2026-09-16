@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { PawPrint, Mail, Lock } from "lucide-react";
-import logo from "@/assets/logo-anjos.png";
+import logoAsset from "@/assets/logo-anjos.png.asset.json";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
