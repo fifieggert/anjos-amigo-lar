@@ -24,8 +24,8 @@ function LoginPage() {
       {/* Left visual */}
       <div className="hidden lg:flex flex-col justify-between p-10 bg-gradient-to-br from-primary/15 via-secondary/10 to-accent/10 relative overflow-hidden">
         <div className="flex items-center gap-3 relative z-10">
-          <img src={logo} alt="" className="size-10" width={40} height={40} />
-          <span className="font-display font-bold text-lg">Anjos Protetores</span>
+          <img src={logo} alt="" className="size-14" width={56} height={56} />
+          <span className="font-display font-bold text-2xl">Anjos Protetores</span>
         </div>
         <div className="relative z-10 max-w-md">
           <PawPrint className="size-10 text-accent mb-4" />
@@ -55,8 +55,8 @@ function LoginPage() {
           className="w-full max-w-md space-y-6"
         >
           <div className="lg:hidden flex items-center gap-3">
-            <img src={logo} alt="" className="size-10" width={40} height={40} />
-            <span className="font-display font-bold text-lg">Anjos Protetores</span>
+            <img src={logo} alt="" className="size-14" width={56} height={56} />
+            <span className="font-display font-bold text-2xl">Anjos Protetores</span>
           </div>
 
           <div>
