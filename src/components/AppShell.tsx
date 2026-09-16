@@ -45,7 +45,7 @@ export function AppShell() {
         } lg:translate-x-0`}
       >
         <div className="p-6 flex items-center gap-3">
-          <img src={logo} alt="Anjos Protetores" className="size-10 rounded-xl bg-secondary/15 p-1" width={40} height={40} />
+          <img src={logo} alt="Anjos Protetores" className="size-14 rounded-xl bg-secondary/15 p-1" width={56} height={56} />
           <div className="leading-tight">
             <p className="font-display font-bold text-foreground">Anjos</p>
             <p className="font-display font-bold text-primary -mt-0.5">Protetores</p>

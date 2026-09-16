@@ -97,7 +97,7 @@ function Navbar({
     >
       <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
         <a href="#inicio" className="flex items-center gap-2.5">
-          <img src={logo} alt="" className="size-9" width={36} height={36} />
+          <img src={logo} alt="" className="size-12" width={48} height={48} />
           <span className="font-display font-bold text-lg">Anjos Protetores</span>
         </a>
 
@@ -858,7 +858,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
         <div>
           <div className="flex items-center gap-2.5">
-            <img src={logo} alt="" className="size-9" width={36} height={36} />
+            <img src={logo} alt="" className="size-12" width={48} height={48} />
             <span className="font-display font-bold text-lg">Anjos Protetores</span>
           </div>
           <p className="text-sm text-muted-foreground mt-4 leading-relaxed">
