@@ -26,6 +26,8 @@ import { animais, type Animal } from "@/lib/mock-data";
 import logoAsset from "@/assets/logo-anjos.png.asset.json";
 const logo = logoAsset.url;
 import hero from "@/assets/hero-adocao.jpg";
+import dogsLineupAsset from "@/assets/cachorros-hero.jpg.asset.json";
+const dogsLineup = dogsLineupAsset.url;
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/publico")({
@@ -155,68 +157,59 @@ function Navbar({
 /* ---------- Hero ---------- */
 function Hero() {
   return (
-    <section id="inicio" className="relative pt-28 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
+    <section id="inicio" className="relative pt-28 pb-6 lg:pt-32 overflow-hidden bg-hero-canopy">
       <div className="absolute -top-32 -left-32 size-[28rem] bg-secondary/25 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-20 -right-20 size-96 bg-accent/20 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-secondary/15 text-secondary rounded-full text-xs font-bold uppercase tracking-wider">
-            <Heart className="size-3.5" /> Adoção responsável
-          </span>
-          <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl mt-6 leading-[1.05] tracking-tight">
-            Encontre um <br />
-            novo <span className="text-accent">melhor amigo</span>
-          </h1>
-          <p className="text-lg text-muted-foreground mt-6 max-w-xl leading-relaxed">
-            Somos um abrigo dedicado a resgatar, cuidar e encontrar lares amorosos
-            para cães e gatos. Cada animal aqui tem uma história — e você pode
-            escrever o próximo capítulo dela.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <a
-              href="#animais"
-              className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-accent text-accent-foreground font-bold shadow-lg shadow-accent/25 hover:bg-accent/90 hover:-translate-y-0.5 transition-all"
-            >
-              <PawPrint className="size-5" />
-              Quero adotar
-            </a>
-            <a
-              href="#doacoes"
-              className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-card border-2 border-border font-bold hover:border-primary hover:text-primary transition-all"
-            >
-              <HandHeart className="size-5" />
-              Fazer doação
-            </a>
-          </div>
+      <div className="relative max-w-3xl mx-auto px-6 text-center">
+        <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-secondary/15 text-secondary rounded-full text-xs font-bold uppercase tracking-wider">
+          <Heart className="size-3.5" /> Adoção responsável
+        </span>
+        <h1 className="font-display font-bold text-5xl sm:text-6xl lg:text-7xl mt-6 leading-[1.05] tracking-tight">
+          Encontre um <br />
+          novo <span className="text-accent">melhor amigo</span>
+        </h1>
+        <p className="text-lg text-muted-foreground mt-6 max-w-xl mx-auto leading-relaxed">
+          Somos um abrigo dedicado a resgatar, cuidar e encontrar lares amorosos
+          para cães e gatos. Cada animal aqui tem uma história — e você pode
+          escrever o próximo capítulo dela.
+        </p>
+        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <a
+            href="#animais"
+            className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-accent text-accent-foreground font-bold shadow-lg shadow-accent/25 hover:bg-accent/90 hover:-translate-y-0.5 transition-all"
+          >
+            <PawPrint className="size-5" />
+            Quero adotar
+          </a>
+          <a
+            href="#doacoes"
+            className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-card border-2 border-border font-bold hover:border-primary hover:text-primary transition-all"
+          >
+            <HandHeart className="size-5" />
+            Fazer doação
+          </a>
         </div>
-
-        <div className="relative">
-          <div className="relative rounded-[2rem] overflow-hidden shadow-2xl shadow-primary/20 ring-1 ring-border">
-            <img
-              src={hero}
-              alt="Cachorro e gato felizes na grama ao sol"
-              width={1600}
-              height={1120}
-              className="w-full h-full object-cover"
-              fetchPriority="high"
-            />
-          </div>
-          <div className="hidden sm:flex absolute -bottom-6 -left-6 bg-card rounded-2xl shadow-xl border border-border p-4 gap-3 items-center">
-            <div className="size-12 rounded-xl bg-success/15 grid place-items-center">
-              <Heart className="size-6 text-success" />
-            </div>
-            <div>
-              <p className="font-display font-bold text-2xl leading-none">+428</p>
-              <p className="text-xs text-muted-foreground mt-1">vidas transformadas</p>
-            </div>
-          </div>
-          <div className="hidden sm:flex absolute -top-4 -right-4 bg-card rounded-2xl shadow-xl border border-border px-4 py-3 items-center gap-2">
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+          <span className="inline-flex items-center gap-2">
             <span className="size-2 rounded-full bg-success animate-pulse" />
-            <span className="text-xs font-bold">42 amigos disponíveis</span>
-          </div>
+            <span className="font-bold text-foreground">42</span> amigos disponíveis agora
+          </span>
+          <span className="inline-flex items-center gap-2">
+            <Heart className="size-4 text-accent" />
+            <span className="font-bold text-foreground">+428</span> vidas transformadas
+          </span>
         </div>
       </div>
+
+      <img
+        src={dogsLineup}
+        alt="Ilustração de vários cachorros de diferentes raças sentados lado a lado"
+        width={1416}
+        height={724}
+        fetchPriority="high"
+        className="relative mx-auto mt-10 w-full max-w-4xl select-none"
+      />
     </section>
   );
 }

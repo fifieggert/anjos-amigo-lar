@@ -9,25 +9,24 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as PublicoRouteImport } from './routes/publico'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as AppRouteImport } from './routes/_app'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AppRelatoriosRouteImport } from './routes/_app.relatorios'
-import { Route as AppDoacoesRouteImport } from './routes/_app.doacoes'
-import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
-import { Route as AppAnimaisRouteImport } from './routes/_app.animais'
+import { Route as AppRouteImport } from './routes/_app'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PublicoRouteImport } from './routes/publico'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AppAdocoesRouteImport } from './routes/_app.adocoes'
+import { Route as AppAnimaisRouteImport } from './routes/_app.animais'
+import { Route as AppDashboardRouteImport } from './routes/_app.dashboard'
+import { Route as AppDoacoesRouteImport } from './routes/_app.doacoes'
+import { Route as AppRelatoriosRouteImport } from './routes/_app.relatorios'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicoRoute = PublicoRouteImport.update({
-  id: '/publico',
-  path: '/publico',
+const AppRoute = AppRouteImport.update({
+  id: '/_app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -35,28 +34,19 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRoute = AppRouteImport.update({
-  id: '/_app',
+const PublicoRoute = PublicoRouteImport.update({
+  id: '/publico',
+  path: '/publico',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AppRelatoriosRoute = AppRelatoriosRouteImport.update({
-  id: '/relatorios',
-  path: '/relatorios',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDoacoesRoute = AppDoacoesRouteImport.update({
-  id: '/doacoes',
-  path: '/doacoes',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppDashboardRoute = AppDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AppAdocoesRoute = AppAdocoesRouteImport.update({
+  id: '/adocoes',
+  path: '/adocoes',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAnimaisRoute = AppAnimaisRouteImport.update({
@@ -64,9 +54,19 @@ const AppAnimaisRoute = AppAnimaisRouteImport.update({
   path: '/animais',
   getParentRoute: () => AppRoute,
 } as any)
-const AppAdocoesRoute = AppAdocoesRouteImport.update({
-  id: '/adocoes',
-  path: '/adocoes',
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDoacoesRoute = AppDoacoesRouteImport.update({
+  id: '/doacoes',
+  path: '/doacoes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRelatoriosRoute = AppRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
   getParentRoute: () => AppRoute,
 } as any)
 
@@ -152,25 +152,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/publico': {
-      id: '/publico'
-      path: '/publico'
-      fullPath: '/publico'
-      preLoaderRoute: typeof PublicoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app': {
@@ -180,32 +166,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_app/relatorios': {
-      id: '/_app/relatorios'
-      path: '/relatorios'
-      fullPath: '/relatorios'
-      preLoaderRoute: typeof AppRelatoriosRouteImport
-      parentRoute: typeof AppRoute
+    '/publico': {
+      id: '/publico'
+      path: '/publico'
+      fullPath: '/publico'
+      preLoaderRoute: typeof PublicoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/doacoes': {
-      id: '/_app/doacoes'
-      path: '/doacoes'
-      fullPath: '/doacoes'
-      preLoaderRoute: typeof AppDoacoesRouteImport
-      parentRoute: typeof AppRoute
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/_app/dashboard': {
-      id: '/_app/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AppDashboardRouteImport
+    '/_app/adocoes': {
+      id: '/_app/adocoes'
+      path: '/adocoes'
+      fullPath: '/adocoes'
+      preLoaderRoute: typeof AppAdocoesRouteImport
       parentRoute: typeof AppRoute
     }
     '/_app/animais': {
@@ -215,11 +201,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppAnimaisRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/adocoes': {
-      id: '/_app/adocoes'
-      path: '/adocoes'
-      fullPath: '/adocoes'
-      preLoaderRoute: typeof AppAdocoesRouteImport
+    '/_app/dashboard': {
+      id: '/_app/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/doacoes': {
+      id: '/_app/doacoes'
+      path: '/doacoes'
+      fullPath: '/doacoes'
+      preLoaderRoute: typeof AppDoacoesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/relatorios': {
+      id: '/_app/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AppRelatoriosRouteImport
       parentRoute: typeof AppRoute
     }
   }
